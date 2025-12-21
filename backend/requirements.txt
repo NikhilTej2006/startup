@@ -3,3 +3,7 @@ uvicorn
 pydantic
 python-dotenv
 loguru
+transformers
+torch
+sentence-transformers
+requests
