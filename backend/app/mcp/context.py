@@ -1,20 +1,21 @@
-from pydantic import BaseModel
-from typing import Optional, List, Dict
+from pydantic import BaseModel, Field
+from typing import Any, Dict, List, Optional
 
 class StartupContext(BaseModel):
     idea: str
-    domain: Optional[str] = None
-    target_users: Optional[str] = None
+    domain: str
 
-    market_score: Optional[float] = None
-    competition_score: Optional[float] = None
-    risk_score: Optional[float] = None
-
-    swot: Optional[Dict] = None
-    tech_stack: Optional[Dict] = None
-    mvp_plan: Optional[Dict] = None
-    pitch: Optional[Dict] = None
-
+    # agent tracking
     current_agent: Optional[str] = None
-    completed_agents: List[str] = []
-    stop_reason: Optional[str] = None
+    completed_agents: List[str] = Field(default_factory=list)
+
+    # market agent
+    market: Optional[Dict[str, Any]] = None
+    market_score: Optional[float] = None
+
+    # competition agent
+    competition: Optional[Dict[str, Any]] = None
+    competition_score: Optional[float] = None
+
+    # swot agent (future)
+    swot: Optional[Dict[str, Any]] = None
