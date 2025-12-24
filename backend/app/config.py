@@ -4,9 +4,9 @@ class Settings(BaseSettings):
     API_V1_PREFIX: str = "/api/v1"
     DEBUG: bool = True
 
-    GEMINI_API_KEY: str
-    TAVILY_API_KEY: str
+    TAVILY_API_KEY: str | None = None
     HF_API_KEY: str
+    GROQ_API_KEY: str
     class Config:
         env_file = ".env"
         extra = "forbid"

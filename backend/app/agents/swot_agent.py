@@ -1,7 +1,7 @@
 from app.mcp.context import StartupContext
-from app.services.llm_router import LLMRouter
+from app.services.llm_router import generate
 from app.utils.logger import logger
-import json
+from app.utils.llm_utils import extract_json
 
 class SWOTAgent:
     name = "swot_agent"
@@ -43,8 +43,19 @@ Return STRICT JSON ONLY:
 """
 
         try:
-            response = await LLMRouter.generate(prompt, agent=self.name)
-            data = json.loads(response)
+            response = await generate(
+                agent_name=self.name,
+                system="You are a senior startup strategist performing SWOT analysis.",
+                prompt=prompt
+            )
+            logger.debug(f"{self.name} LLM response: {response}")
+
+            data = extract_json(response) or {}
+            data.setdefault("strengths", [])
+            data.setdefault("weaknesses", [])
+            data.setdefault("opportunities", [])
+            data.setdefault("threats", [])
+            data.setdefault("confidence_level", None)
 
         except Exception as e:
             logger.error(f"SWOT agent fallback triggered: {e}")
@@ -57,7 +68,10 @@ Return STRICT JSON ONLY:
                 "error": "LLM unavailable"
             }
 
+        # Update context
         context.swot = data
+        if not hasattr(context, "completed_agents") or context.completed_agents is None:
+            context.completed_agents = []
         context.completed_agents.append(self.name)
 
         logger.info("SWOT Agent completed")
