@@ -14,7 +14,7 @@ from app.agents.red_flag_agent import RedFlagAgent
 from app.agents.failure_mode_agent import FailureModeAgent
 from app.agents.stress_test_agent import StressTestAgent
 from app.agents.survivability_agent import SurvivabilityAgent
-
+from app.agents.investment_committee_agent import InvestmentCommitteeAgent
 
 from app.utils.logger import logger
 
@@ -51,5 +51,6 @@ class MCPOrchestrator:
         self.context = await FailureModeAgent().run(self.context)
         self.context = await StressTestAgent().run(self.context)
         self.context = await SurvivabilityAgent().run(self.context)
+        self.context = await InvestmentCommitteeAgent().run(self.context)
         logger.info("MCP Orchestrator completed") 
         return self.context
