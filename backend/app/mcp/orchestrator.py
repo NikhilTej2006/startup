@@ -8,6 +8,14 @@ from app.agents.roadmap_agent import RoadmapAgent
 from app.agents.mvp_agent import MVPAgent
 from app.agents.tech_stack_agent import TechStackAgent
 from app.agents.execution_agent import ExecutionAgent
+from app.agents.pitch_deck_agent import PitchDeckAgent
+from app.agents.fundability_agent import FundabilityAgent
+from app.agents.red_flag_agent import RedFlagAgent
+from app.agents.failure_mode_agent import FailureModeAgent
+from app.agents.stress_test_agent import StressTestAgent
+from app.agents.survivability_agent import SurvivabilityAgent
+
+
 from app.utils.logger import logger
 
 class MCPOrchestrator:
@@ -37,5 +45,11 @@ class MCPOrchestrator:
         self.context = await MVPAgent().run(self.context)
         self.context = await TechStackAgent().run(self.context)
         self.context = await ExecutionAgent().run(self.context)
+        self.context = await PitchDeckAgent().run(self.context)
+        self.context = await FundabilityAgent().run(self.context)
+        self.context = await RedFlagAgent().run(self.context)
+        self.context = await FailureModeAgent().run(self.context)
+        self.context = await StressTestAgent().run(self.context)
+        self.context = await SurvivabilityAgent().run(self.context)
         logger.info("MCP Orchestrator completed") 
         return self.context
