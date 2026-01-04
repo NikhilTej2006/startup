@@ -34,12 +34,14 @@ class StartupContext(BaseModel):
     red_flags: Optional[Dict[str, Any]] = None
 
     # PHASE 9 — Failure Analysis
-    failure_analysis: Optional[Dict[str, Any]] = None
+    failure_analysis: Optional[dict] = None
     stress_test: Optional[Dict[str, Any]] = None
     survivability: Optional[Dict[str, Any]] = None
 
     #PHASE 10 - Investment Committee Decision
     investment_committee: Optional[dict] = None
+    # PHASE 11 - VC Cross Examination
+    vc_cross_examination: Optional[dict] = None
     # ---- SYSTEM ----
     completed_agents: List[str] = []
     current_agent: Optional[str] = None
