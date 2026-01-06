@@ -4,12 +4,13 @@ import { validateStartup } from "../services/api";
 
 export default function Validate() {
   const navigate = useNavigate();
+
   const [idea, setIdea] = useState("");
   const [domain, setDomain] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit() {
-    if (!idea || !domain) return;
+  const handleSubmit = async () => {
+    if (!idea.trim() || !domain.trim()) return;
 
     setLoading(true);
     try {
@@ -19,15 +20,20 @@ export default function Validate() {
         target_users: "General",
       });
 
-      // save response for dashboard
-      localStorage.setItem("validation_result", JSON.stringify(result));
+      // Save response for dashboard
+      localStorage.setItem(
+        "validation_result",
+        JSON.stringify(result)
+      );
+
       navigate("/dashboard");
-    } catch (e) {
-      alert("Validation failed");
+    } catch (error) {
+      console.error(error);
+      alert("Validation failed. Please try again.");
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-bg flex items-center justify-center px-6">
@@ -36,27 +42,40 @@ export default function Validate() {
           Validate Your Startup Idea
         </h2>
 
-        <label className="block text-sm text-muted mb-2">Startup Idea</label>
+        {/* Startup Idea */}
+        <label className="block text-sm text-muted mb-2">
+          Startup Idea
+        </label>
         <textarea
-          className="w-full mb-4 rounded-xl bg-black/40 border border-white/10 p-3 focus:outline-none focus:ring-2 focus:ring-primary"
+          className="w-full mb-4 rounded-xl bg-black/40 border border-white/10 p-3
+                     focus:outline-none focus:ring-2 focus:ring-primary"
           rows={4}
           value={idea}
           onChange={(e) => setIdea(e.target.value)}
           placeholder="AI-powered delivery drones for medical logistics"
         />
 
-        <label className="block text-sm text-muted mb-2">Domain</label>
+        {/* Domain */}
+        <label className="block text-sm text-muted mb-2">
+          Domain
+        </label>
         <input
-          className="w-full mb-6 rounded-xl bg-black/40 border border-white/10 p-3 focus:outline-none focus:ring-2 focus:ring-primary"
+          className="w-full mb-6 rounded-xl bg-black/40 border border-white/10 p-3
+                     focus:outline-none focus:ring-2 focus:ring-primary"
           value={domain}
           onChange={(e) => setDomain(e.target.value)}
           placeholder="Logistics / Healthcare"
         />
 
+        {/* Submit */}
         <button
           onClick={handleSubmit}
           disabled={loading}
-          className="w-full py-3 rounded-xl bg-primary hover:bg-indigo-500 transition shadow-glow"
+          className={`w-full py-3 rounded-xl transition shadow-glow
+            ${loading
+              ? "bg-indigo-400 cursor-not-allowed"
+              : "bg-primary hover:bg-indigo-500"
+            }`}
         >
           {loading ? "Running AI Agents..." : "Run Validation"}
         </button>

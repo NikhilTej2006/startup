@@ -36,13 +36,18 @@ export default function Landing() {
           >
             Validate Idea
           </button>
-
+          <button
+              onClick={() => navigate("/report")}
+              className="px-6 py-3 rounded-xl border border-white/20 hover:bg-white/5 transition-all"
+            >
+              View Sample Report
+          </button>
           {/* ✅ Navigate to Dashboard */}
           <button
             onClick={() => navigate("/dashboard")}
             className="px-6 py-3 rounded-xl border border-white/20 hover:bg-white/5 transition-all duration-200"
           >
-            View Sample Report
+            DashBoard
           </button>
         </div>
       </div>
